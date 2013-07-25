@@ -1,18 +1,20 @@
 #include "accumulator.h"
 
-Cy_struct_Accumulator* _Accumulator_i_construct(Cy_struct_Accumulator* self, CyClass* cls)
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
+Cy_struct_Accumulator* _Accumulator_i_construct(CyClass* cls, Cy_struct_Accumulator* self)
 {
-    CY_INVOKE_VOID(self, cls->parent, M_i_construct);
+    CY_INVOKE(void*, cls->parent, M_i_construct, self);
     self->value = 0;
     return self;
 }
 
-void _Accumulator_i_add_i(Cy_struct_Accumulator* self, CyClass* cls, int value)
+void _Accumulator_i_add_i(CyClass* cls, Cy_struct_Accumulator* self, int value)
 {
     self->value += value;
 }
 
-int _Accumulator_i_getValue(Cy_struct_Accumulator* self, CyClass* cls)
+int _Accumulator_i_getValue(CyClass* cls, Cy_struct_Accumulator* self)
 {
     return self->value;
 }

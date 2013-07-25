@@ -45,34 +45,35 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
 int cy_main(int argc, char* argv[])
 {
     // Using String object
     Cy_struct_String* str1 = CY_NEW(String);
-    CY_INVOKE_ARGS(str1, Cy_class_String, M_i_construct_pb, "Hello");
-    Cy_struct_String* str2 = CY_INVOKE_ARGS(CY_NEW(String), Cy_class_String, M_i_construct_pb, " People");
-    Cy_struct_String* str3 = (Cy_struct_String*)CY_INVOKE_ARGS(str1, Cy_class_String, M_i_concat_ZCString, str2);
+    CY_INVOKE(void*, Cy_class_String, M_i_construct_pb, str1, "Hello");
+    Cy_struct_String* str2 = CY_INVOKE(Cy_struct_String*, Cy_class_String, M_i_construct_pb, CY_NEW(String), " People");
+    Cy_struct_String* str3 = CY_INVOKE(Cy_struct_String*, Cy_class_String, M_i_concat_ZCString, str1, str2);
     printf("%s\n", str3->data);
-    Cy_struct_String* str4 = (Cy_struct_String*)CY_INVOKE_ARGS(str1, Cy_class_String, M_i_concat_pb_pb, ", ", " World");
+    Cy_struct_String* str4 = CY_INVOKE(Cy_struct_String*, Cy_class_String, M_i_concat_pb_pb, str1, ", ", "World");
     printf("%s\n", str4->data);
-    printf("%c%c\n", (char)CY_INVOKE_ARGS(str4, Cy_class_String, M_i_charAt_i, 0), (char)CY_INVOKE_ARGS(str4, Cy_class_String, M_i_charAt_i, 8));
+    printf("%c%c\n", CY_INVOKE(char, Cy_class_String, M_i_charAt_i, str4, 0), CY_INVOKE(char, Cy_class_String, M_i_charAt_i, str4, 7));
 
     // Using Dummy object
     Cy_struct_Dummy* dummy = CY_NEW(Dummy);
-    CY_INVOKE_VOID(dummy, Cy_class_Dummy, M_i_construct);
+    CY_INVOKE(Cy_struct_Dummy*, Cy_class_Dummy, M_i_construct, dummy);
 
     // Using Accumulator object
     Cy_struct_Accumulator* acc = CY_NEW(Accumulator);
-    CY_INVOKE_VOID(acc, Cy_class_Accumulator, M_i_construct);
-    CY_INVOKE_ARGS(acc, Cy_class_Accumulator, M_i_add_i, 10);
-    CY_INVOKE_ARGS(acc, Cy_class_Accumulator, M_i_add_i, 30);
-    CY_INVOKE_ARGS(acc, Cy_class_Accumulator, M_i_add_i, 2);
-    printf("Accumulator = %d\n", (int)CY_INVOKE_VOID(acc, Cy_class_Accumulator, M_i_getValue));
+    CY_INVOKE(Cy_struct_Dummy*, Cy_class_Accumulator, M_i_construct, acc);
+    CY_INVOKE(Cy_struct_Dummy*, Cy_class_Accumulator, M_i_add_i, acc, 10);
+    CY_INVOKE(Cy_struct_Dummy*, Cy_class_Accumulator, M_i_add_i, acc, 30);
+    CY_INVOKE(Cy_struct_Dummy*, Cy_class_Accumulator, M_i_add_i, acc, 2);
+    printf("Accumulator = %d\n", CY_INVOKE(int, Cy_class_Accumulator, M_i_getValue, acc));
 
     // Using Dummy2 object
     Cy_struct_Dummy2* dummy2 = CY_NEW(Dummy2);
-    puts(QUOTE(CY_INVOKE_VOID(dummy2, Cy_class_Dummy2, M_i_construct)));
-    CY_INVOKE_VOID(dummy2, Cy_class_Dummy2, M_i_construct);
+    CY_INVOKE(Cy_struct_Dummy2*, Cy_class_Dummy2, M_i_construct, dummy2);
 
     return 0;
 }

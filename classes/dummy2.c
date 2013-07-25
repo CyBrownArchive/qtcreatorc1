@@ -2,14 +2,16 @@
 
 #include "dummy2.h"
 
-Cy_struct_Dummy2* _Dummy2_i_construct(Cy_struct_Dummy2* self, CyClass* cls)
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+
+Cy_struct_Dummy2* _Dummy2_i_construct(CyClass* cls, Cy_struct_Dummy2* self)
 {
-    CY_INVOKE_VOID(self, cls->parent, M_i_construct);
+    CY_INVOKE(void*, cls->parent, M_i_construct, self);
     puts("Dummy2.construct()");
     return self;
 }
 
-Cy_struct_Dummy2* _Dummy2_i_dummy(Cy_struct_Dummy2* self, CyClass* cls)
+Cy_struct_Dummy2* _Dummy2_i_dummy(CyClass* cls, Cy_struct_Dummy2* self)
 {
     return self;
 }

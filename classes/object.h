@@ -7,6 +7,6 @@ typedef struct {
     CyClass* cls;
 } Cy_struct_Object;
 
-void* _Object_i_construct(void* self, CyClass* cls);
+void* _Object_i_construct(CyClass* cls, void* self);
 
 #endif

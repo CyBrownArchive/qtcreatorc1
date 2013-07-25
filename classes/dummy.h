@@ -9,7 +9,7 @@ typedef struct {
 
 #include "../cy_runtime/runtime.h"
 
-Cy_struct_Dummy* _Dummy_i_construct(Cy_struct_Dummy* self, CyClass* cls);
-Cy_struct_Dummy* _Dummy_i_dummy(Cy_struct_Dummy* self, CyClass* cls);
+Cy_struct_Dummy* _Dummy_i_construct(CyClass* cls, Cy_struct_Dummy* self);
+Cy_struct_Dummy* _Dummy_i_dummy(CyClass* cls, Cy_struct_Dummy* self);
 
 #endif

@@ -9,7 +9,8 @@ SOURCES += main.c \
     classes/accumulator.c \
     classes/object.c \
     cy_runtime/runtime.c \
-    classes/dummy2.c
+    classes/dummy2.c \
+    global_classes.c
 
 HEADERS += \
     cy_muids.h \
@@ -22,5 +23,6 @@ HEADERS += \
     cy_runtime/class.h \
     cy_runtime/runtime.h \
     cy_runtime/macros.h \
-    classes/dummy2.h
+    classes/dummy2.h \
+    global_classes.h
 

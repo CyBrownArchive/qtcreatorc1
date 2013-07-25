@@ -9,11 +9,7 @@ extern jmp_buf env;
 #include "../cy_muids.h"
 #include "class.h"
 
-extern CyClass* Cy_class_Object;
-extern CyClass* Cy_class_Dummy;
-extern CyClass* Cy_class_Dummy2;
-extern CyClass* Cy_class_String;
-extern CyClass* Cy_class_Accumulator;
+#include "../global_classes.h"
 
 typedef void* (*cy_functionPointer)(void*, ...);
 
