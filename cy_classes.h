@@ -5,5 +5,6 @@
 #include "classes/string.h"
 #include "classes/accumulator.h"
 #include "classes/dummy.h"
+#include "classes/dummy2.h"
 
 #endif

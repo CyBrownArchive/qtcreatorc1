@@ -11,6 +11,7 @@ extern jmp_buf env;
 
 extern CyClass* Cy_class_Object;
 extern CyClass* Cy_class_Dummy;
+extern CyClass* Cy_class_Dummy2;
 extern CyClass* Cy_class_String;
 extern CyClass* Cy_class_Accumulator;
 
@@ -21,8 +22,11 @@ CyClass* CyClass_setParent(CyClass* self, CyClass* parent);
 CyClass* CyClass_addMethod(CyClass* self, cy_muid muid, void* (*implementation)(void*, ...));
 void* CyObject_setClass(void* self, CyClass* cls);
 
-cy_functionPointer cy_findImplementation(jmp_buf env, void* object, cy_muid muid);
-cy_functionPointer cy_findSuperImplementation(jmp_buf env, void* object, cy_muid muid);
+cy_functionPointer cy_findImplementation(jmp_buf env, CyClass* cls, cy_muid muid);
+cy_functionPointer cy_findImplementationWithClass(jmp_buf env, CyClass* cls, cy_muid muid);
+
+
+cy_functionPointer cy_findSuperImplementation(jmp_buf env, CyClass* cls, cy_muid muid);
 
 #include "cy_classes.h"
 

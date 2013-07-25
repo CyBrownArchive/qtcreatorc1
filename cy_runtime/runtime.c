@@ -8,6 +8,7 @@ jmp_buf env;
 
 CyClass* Cy_class_Object;
 CyClass* Cy_class_Dummy;
+CyClass* Cy_class_Dummy2;
 CyClass* Cy_class_String;
 CyClass* Cy_class_Accumulator;
 
@@ -48,12 +49,12 @@ int cy_nop(void* self, int a) {
     return 0;
 }
 
-cy_functionPointer cy_findSuperImplementation(jmp_buf env, void* object, cy_muid muid)
+cy_functionPointer cy_findSuperImplementation(jmp_buf env, CyClass* clsb, cy_muid muid)
 {
     unsigned int i;
     cy_functionPointer implementation = (void* (*)(void*, ...))cy_nop;
     int found = 0;
-    CyClass* cls = ((Cy_struct_Object*)object)->cls->parent;
+    CyClass* cls = clsb->parent;
 
     while (cls && !found) {
         for (i = 0; i < cls->methodsCount; i++) {
@@ -65,18 +66,19 @@ cy_functionPointer cy_findSuperImplementation(jmp_buf env, void* object, cy_muid
         cls = cls->parent;
     }
     if (!found) {
+        printf("Not found: %d\n", muid);
         longjmp(env, 1);
     }
     return implementation;
 }
 
-cy_functionPointer cy_findImplementation(jmp_buf env, void* object, cy_muid muid)
+cy_functionPointer cy_findImplementation(jmp_buf env, CyClass* cls, cy_muid muid)
 {
     unsigned int i;
-    for (i = 0; i < ((Cy_struct_Object*)object)->cls->methodsCount; i++) {
-        if (((Cy_struct_Object*)object)->cls->methods[i].muid == muid) {
-            return ((Cy_struct_Object*)object)->cls->methods[i].method;
+    for (i = 0; i < cls->methodsCount; i++) {
+        if (cls->methods[i].muid == muid) {
+            return cls->methods[i].method;
         }
     }
-    return cy_findSuperImplementation(env, object, muid);
+    return cy_findSuperImplementation(env, cls, muid);
 }
