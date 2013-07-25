@@ -4,15 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.c \
-    cy_runtime.c \
     classes/string.c \
     classes/dummy.c \
     classes/accumulator.c \
     classes/object.c \
-    cy_runtime/class.c
+    cy_runtime/runtime.c
 
 HEADERS += \
-    cy_runtime.h \
     cy_muids.h \
     cy_macros.h \
     classes/string.h \
@@ -20,5 +18,7 @@ HEADERS += \
     classes/dummy.h \
     classes/accumulator.h \
     classes/object.h \
-    cy_runtime/class.h
+    cy_runtime/class.h \
+    cy_runtime/runtime.h \
+    cy_runtime/macros.h
 

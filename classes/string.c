@@ -1,45 +1,45 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "string.h"
 
-Cy_struct_String* _String_i_init(Cy_struct_String* self)
+Cy_struct_String* _String_i_construct(Cy_struct_String* self)
 {
-    CY_INVOKE_SUPER_VOID(self, M_i_init);
-    puts("String.init()");
+    CY_INVOKE_SUPER_VOID(self, M_i_construct);
+    //puts("String.construct()");
     self->data = strdup("");
     return self;
 }
 
-Cy_struct_String* _String_i_init_pb(Cy_struct_String* self, char* str)
+Cy_struct_String* _String_i_construct_pb(Cy_struct_String* self, char* str)
 {
-    CY_INVOKE_VOID(self, M_i_init);
-    puts("String.init(b*)");
+    CY_INVOKE_VOID(self, M_i_construct);
     self->data = strdup(str);
     return self;
 }
 
-long _String_i_add5shorts_s_s_s_s_s(Cy_struct_String* self, short a, short b, short c, short d, short e)
+char _String_i_charAt_i(Cy_struct_String* self, int offset)
 {
-    return a + b + c + d + e;
+    return self->data[offset];
 }
 
-char* _String_i_concat_pb(Cy_struct_String* self, char* str)
+Cy_struct_String* _String_i_concat_pb(Cy_struct_String* self, char* other)
 {
-    char* newData = (char*)malloc(strlen(self->data) + strlen(str) + 1);
-    strcpy(newData, self->data);
-    strcat(newData, str);
-    self->data = newData;
-    return self->data;
+    char* newData = (char*)malloc(strlen(self->data) + strlen(other) + 1);
+    newData[0] = '\0';
+    strcat(newData, self->data);
+    strcat(newData, other);
+    Cy_struct_String* result = CY_NEW(String);
+    CY_INVOKE_ARGS(result, M_i_construct_pb, newData);
+    return result;
 }
 
-char* _String_i_concat_pb_pb(Cy_struct_String* self, char* str1, char* str2)
+Cy_struct_String* _String_i_concat_ZCString(Cy_struct_String* self, Cy_struct_String* other)
 {
-    char* newData = (char*)malloc(strlen(self->data) + strlen(str1) + strlen(str2) + 1);
-    strcpy(newData, self->data);
-    strcat(newData, str1);
-    strcat(newData, str2);
-    self->data = newData;
-    return self->data;
+    return CY_INVOKE_ARGS(self, M_i_concat_pb, other->data);
+}
+
+Cy_struct_String* _String_i_concat_pb_pb(Cy_struct_String* self, char* str1, char* str2)
+{
+    return CY_INVOKE_ARGS(CY_INVOKE_ARGS(self, M_i_concat_pb, str1), M_i_concat_pb, str2);
 }

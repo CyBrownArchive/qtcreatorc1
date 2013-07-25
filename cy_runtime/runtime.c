@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <setjmp.h>
+
+#include "runtime.h"
 
 jmp_buf env;
 
-#include "cy_runtime.h"
+CyClass* Cy_class_Object;
+CyClass* Cy_class_Dummy;
+CyClass* Cy_class_String;
+CyClass* Cy_class_Accumulator;
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
@@ -34,9 +38,10 @@ CyClass* CyClass_addMethod(CyClass* self, cy_muid muid, void* (*implementation)(
 
 // CyObject
 
-void CyObject_setClass(void* self, CyClass* cls)
+void* CyObject_setClass(void* self, CyClass* cls)
 {
     ((Cy_struct_Object*)self)->cls = cls;
+    return self;
 }
 
 int cy_nop(void* self, int a) {

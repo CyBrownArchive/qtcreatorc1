@@ -7,10 +7,6 @@ typedef struct {
     CyClass* cls;
 } Cy_struct_Object;
 
-void* _Object_i_init(void* self);
-int   _Object_i_inc_i(void* self, int a);
-int   _Object_i_dec_i(void* self, int a);
-int   _Object_i_inc2_i(void* self, int a);
-char* _Object_i_str_pb(void* self, char* a);
+void* _Object_i_construct(void* self);
 
 #endif

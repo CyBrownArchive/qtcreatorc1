@@ -1,59 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-#include <stdarg.h>
 #include <setjmp.h>
 
-#include "cy_runtime.h"
+#include "cy_runtime/runtime.h"
+
+void createClasses()
+{
+    Cy_class_Object = CyClass_init(CY_MALLOC(CyClass));
+    CY_CLASS_DEFINE_METHOD(Cy_class_Object, M_i_construct, _Object_i_construct);
+
+    Cy_class_Dummy = CyClass_init(CY_MALLOC(CyClass));
+    CY_CLASS_EXTENDS(Cy_class_Dummy, Cy_class_Object);
+    CY_CLASS_DEFINE_METHOD(Cy_class_Dummy, M_i_construct, _Dummy_i_construct);
+    CY_CLASS_DEFINE_METHOD(Cy_class_Dummy, M_i_dummy, _Dummy_i_dummy);
+
+    Cy_class_String = CyClass_init(CY_MALLOC(CyClass));
+    CY_CLASS_EXTENDS(Cy_class_String, Cy_class_Object);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_construct, _String_i_construct);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_construct_pb, _String_i_construct_pb);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_concat_pb, _String_i_concat_pb);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_concat_ZCString, _String_i_concat_ZCString);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_concat_pb_pb, _String_i_concat_pb_pb);
+    CY_CLASS_DEFINE_METHOD(Cy_class_String, M_i_charAt_i, _String_i_charAt_i);
+
+    Cy_class_Accumulator = CyClass_init(CY_MALLOC(CyClass));
+    CY_CLASS_EXTENDS(Cy_class_Accumulator, Cy_class_Object);
+    CY_CLASS_DEFINE_METHOD(Cy_class_Accumulator, M_i_construct, _Accumulator_i_construct);
+    CY_CLASS_DEFINE_METHOD(Cy_class_Accumulator, M_i_add_i, _Accumulator_i_add_i);
+    CY_CLASS_DEFINE_METHOD(Cy_class_Accumulator, M_i_getValue, _Accumulator_i_getValue);
+}
 
 void run()
 {
-    // Creating Object class
-    CyClass* CyClassObject = CyClass_init(CY_NEW(CyClass));
-    CY_ADD_METHOD(CyClassObject, M_i_init, _Object_i_init);
-    CY_ADD_METHOD(CyClassObject, M_i_inc_i, _Object_i_inc_i);
-    CY_ADD_METHOD(CyClassObject, M_i_dec_i, _Object_i_dec_i);
-
-    // Creating Dummy class
-    CyClass* CyClassDummy = CyClass_init(CY_NEW(CyClass));
-    CY_SET_PARENT(CyClassDummy, CyClassObject);
-    CY_ADD_METHOD(CyClassDummy, M_i_init, _Dummy_i_init);
-    CY_ADD_METHOD(CyClassDummy, M_i_dummy, _Dummy_i_dummy);
-
-    // Creating String class
-    CyClass* CyClassString = CyClass_init(CY_NEW(CyClass));
-    CY_SET_PARENT(CyClassString, CyClassObject);
-    //CY_ADD_METHOD(CyClassString, M_i_init, _String_i_init);
-    CY_ADD_METHOD(CyClassString, M_i_init_pb, _String_i_init_pb);
-    CY_ADD_METHOD(CyClassString, M_i_concat_pb, _String_i_concat_pb);
-    CY_ADD_METHOD(CyClassString, M_i_concat_pb_pb, _String_i_concat_pb_pb);
-    CY_ADD_METHOD(CyClassString, M_i_add5shorts_s_s_s_s_s, _String_i_add5shorts_s_s_s_s_s);
-
-    // Creating Accumulator class
-    CyClass* CyClassAccumulator = CyClass_init(CY_NEW(CyClass));
-    CY_SET_PARENT(CyClassAccumulator, CyClassObject);
-    CY_ADD_METHOD(CyClassAccumulator, M_i_init, _Accumulator_i_init);
-    CY_ADD_METHOD(CyClassAccumulator, M_i_add_i, _Accumulator_i_add_i);
-    CY_ADD_METHOD(CyClassAccumulator, M_i_getValue, _Accumulator_i_getValue);
-
     // Using String object
-    Cy_struct_String* str = CY_NEW(Cy_struct_String);
-    CY_SET_CLASS(str, CyClassString);
-    CY_INVOKE_ARGS(str, M_i_init_pb, "test");
-    printf("%s\n", (char*)CY_INVOKE_ARGS(str, M_i_concat_pb, "-test1"));
-    printf("%s\n", (char*)CY_INVOKE_ARGS(str, M_i_concat_pb_pb, "-test2", "-test3"));
-    printf("%ld\n", (long)CY_INVOKE_ARGS(str, M_i_add5shorts_s_s_s_s_s, 1, 2, 3, 4, 5));
+    Cy_struct_String* str1 = CY_NEW(String);
+    CY_INVOKE_ARGS(str1, M_i_construct_pb, "Hello");
+    Cy_struct_String* str2 = CY_INVOKE_ARGS(CY_NEW(String), M_i_construct_pb, " People");
+    Cy_struct_String* str3 = (Cy_struct_String*)CY_INVOKE_ARGS(str1, M_i_concat_ZCString, str2);
+    printf("%s\n", str3->data);
+    Cy_struct_String* str4 = (Cy_struct_String*)CY_INVOKE_ARGS(str1, M_i_concat_pb_pb, ", ", " World");
+    printf("%s\n", str4->data);
+    printf("%c%c\n", (char)CY_INVOKE_ARGS(str4, M_i_charAt_i, 0), (char)CY_INVOKE_ARGS(str4, M_i_charAt_i, 8));
 
     // Using Dummy object
-    Cy_struct_Dummy* dummy = CY_NEW(Cy_struct_Dummy);
-    CY_SET_CLASS(dummy, CyClassDummy);
-    CY_INVOKE_VOID(dummy, M_i_init);
+    Cy_struct_Dummy* dummy = CY_NEW(Dummy);
+    CY_INVOKE_VOID(dummy, M_i_construct);
 
     // Using Accumulator object
-    Cy_struct_Accumulator* acc = CY_NEW(Cy_struct_Accumulator);
-    CY_SET_CLASS(acc, CyClassAccumulator);
-    CY_INVOKE_VOID(acc, M_i_init);
+    Cy_struct_Accumulator* acc = CY_NEW(Accumulator);
+    CY_INVOKE_VOID(acc, M_i_construct);
     CY_INVOKE_ARGS(acc, M_i_add_i, 10);
     CY_INVOKE_ARGS(acc, M_i_add_i, 30);
     CY_INVOKE_ARGS(acc, M_i_add_i, 2);
@@ -62,10 +58,11 @@ void run()
 
 int main(void)
 {
-    if (setjmp(env)) {
-        printf("EXCEPTION !\n");
-    } else {
+    createClasses();
+    if (!setjmp(env)) {
         run();
+    } else {
+        printf("UNCAUGHT EXCEPTION !\n");
     }
     return 0;
 }

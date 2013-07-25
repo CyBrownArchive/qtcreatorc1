@@ -1,11 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "accumulator.h"
 
-Cy_struct_Accumulator* _Accumulator_i_init(Cy_struct_Accumulator* self)
+Cy_struct_Accumulator* _Accumulator_i_construct(Cy_struct_Accumulator* self)
 {
-    CY_INVOKE_SUPER_VOID(self, M_i_init);
+    CY_INVOKE_SUPER_VOID(self, M_i_construct);
     self->value = 0;
     return self;
 }
