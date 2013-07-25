@@ -2,6 +2,8 @@
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
+CyClass* Cy_class_Accumulator;
+
 Cy_struct_Accumulator* _Accumulator_i_construct(CyClass* cls, Cy_struct_Accumulator* self)
 {
     CY_INVOKE(void*, cls->parent, M_i_construct, self);

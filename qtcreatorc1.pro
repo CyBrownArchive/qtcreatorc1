@@ -7,10 +7,10 @@ SOURCES += main.c \
     classes/string.c \
     classes/dummy.c \
     classes/accumulator.c \
-    classes/object.c \
     cy_runtime/runtime.c \
     classes/dummy2.c \
-    global_classes.c
+    cy_runtime/object.c \
+    classes/app.c
 
 HEADERS += \
     cy_muids.h \
@@ -19,10 +19,10 @@ HEADERS += \
     cy_classes.h \
     classes/dummy.h \
     classes/accumulator.h \
-    classes/object.h \
     cy_runtime/class.h \
     cy_runtime/runtime.h \
     cy_runtime/macros.h \
     classes/dummy2.h \
-    global_classes.h
+    cy_runtime/object.h \
+    classes/app.h
 

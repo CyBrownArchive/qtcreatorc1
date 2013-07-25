@@ -8,7 +8,11 @@ jmp_buf env;
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
-// CyClass
+void cy_runtime_initialize()
+{
+    CY_CLASS_CREATE(Object);
+    CY_CLASS_DEFINE_METHOD(Object, construct);
+}
 
 CyClass* CyClass_init(CyClass* self)
 {
@@ -17,7 +21,7 @@ CyClass* CyClass_init(CyClass* self)
     return self;
 }
 
-CyClass* CyClass_setParent(CyClass* self, CyClass* parent)
+CyClass* CyClass_extends(CyClass* self, CyClass* parent)
 {
     self->parent = parent;
     return self;

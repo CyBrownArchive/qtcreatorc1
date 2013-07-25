@@ -3,6 +3,8 @@
 
 #include "string.h"
 
+CyClass* Cy_class_String;
+
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
 Cy_struct_String* _String_i_construct(CyClass* cls, Cy_struct_String* self)

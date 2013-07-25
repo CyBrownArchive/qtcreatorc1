@@ -1,14 +1,14 @@
 #ifndef __CY_CLASSES_STRING__
 #define __CY_CLASSES_STRING__
 
-#include "object.h"
+#include "../cy_runtime/runtime.h"
 
 typedef struct {
     Cy_struct_Object super;
     char* data;
 } Cy_struct_String;
 
-#include "../cy_runtime/runtime.h"
+extern CyClass* Cy_class_String;
 
 Cy_struct_String* _String_i_construct(CyClass* cls, Cy_struct_String* self);
 Cy_struct_String* _String_i_construct_pb(CyClass* cls, Cy_struct_String* self, char* str);

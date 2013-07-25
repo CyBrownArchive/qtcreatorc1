@@ -11,7 +11,8 @@ typedef enum {
     M_i_concat_pb_pb,
     M_i_add_i,
     M_i_getValue,
-    M_i_charAt_i
+    M_i_charAt_i,
+    M_i_run
 } cy_muid;
 
 #endif

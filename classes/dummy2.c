@@ -4,6 +4,8 @@
 
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 
+CyClass* Cy_class_Dummy2;
+
 Cy_struct_Dummy2* _Dummy2_i_construct(CyClass* cls, Cy_struct_Dummy2* self)
 {
     CY_INVOKE(void*, cls->parent, M_i_construct, self);
