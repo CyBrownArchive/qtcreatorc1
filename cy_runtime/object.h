@@ -1,7 +1,7 @@
 #ifndef __CY_CLASSES_OBJECT__
 #define __CY_CLASSES_OBJECT__
 
-#include "../cy_runtime/class.h"
+#include "class.h"
 
 typedef struct {
     CyClass* cls;
