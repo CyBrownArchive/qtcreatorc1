@@ -12,7 +12,7 @@ typedef enum {
     M_i_add_i,
     M_i_getValue,
     M_i_charAt_i,
-    M_i_run
+    M_i_run_i_ppb
 } cy_muid;
 
 #endif

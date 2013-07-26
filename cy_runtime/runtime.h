@@ -10,19 +10,13 @@ extern jmp_buf env;
 #include "class.h"
 #include "object.h"
 
-typedef void* (*cy_functionPointer)(void*, ...);
+typedef void* (*cyrt_func)(void*, ...);
 
-void cy_runtime_initialize();
-CyClass* CyClass_init(CyClass* self);
-CyClass* CyClass_extends(CyClass* self, CyClass* parent);
-CyClass* CyClass_addMethod(CyClass* self, cy_muid muid, void* (*implementation)(void*, ...));
-void* CyObject_setClass(void* self, CyClass* cls);
-
-cy_functionPointer cy_findImplementation(jmp_buf env, CyClass* cls, cy_muid muid);
-cy_functionPointer cy_findImplementationWithClass(jmp_buf env, CyClass* cls, cy_muid muid);
-
-cy_functionPointer cy_findSuperImplementation(jmp_buf env, CyClass* cls, cy_muid muid);
-
-#include "cy_classes.h"
+void      cyrt_initialize();
+CyClass*  cyrt_class_init(CyClass* self);
+CyClass*  cyrt_class_extends(CyClass* self, CyClass* parent);
+CyClass*  cyrt_class_define_method(CyClass* self, cy_muid muid, void* (*implementation)(void*, ...));
+void*     cyrt_object_set_class(void* self, CyClass* cls);
+cyrt_func cyrt_find_implementation(jmp_buf env, CyClass* cls, cy_muid muid);
 
 #endif

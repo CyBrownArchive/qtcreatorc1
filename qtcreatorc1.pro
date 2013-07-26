@@ -10,13 +10,12 @@ SOURCES += main.c \
     cy_runtime/runtime.c \
     classes/dummy2.c \
     cy_runtime/object.c \
-    classes/app.c
+    classes/application.c
 
 HEADERS += \
     cy_muids.h \
     cy_macros.h \
     classes/string.h \
-    cy_classes.h \
     classes/dummy.h \
     classes/accumulator.h \
     cy_runtime/class.h \
@@ -24,5 +23,5 @@ HEADERS += \
     cy_runtime/macros.h \
     classes/dummy2.h \
     cy_runtime/object.h \
-    classes/app.h
+    classes/application.h
 
