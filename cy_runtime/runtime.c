@@ -60,3 +60,10 @@ cyrt_func cyrt_find_implementation(jmp_buf env, CyClass* cls, cy_muid muid)
     }
     return implementation;
 }
+
+CyClass* Cy_class_Object;
+
+void* _Object_i_construct(CyClass* cls, void* self)
+{
+    return self;
+}
