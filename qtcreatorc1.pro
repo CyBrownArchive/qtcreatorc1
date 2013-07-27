@@ -9,7 +9,8 @@ SOURCES += main.c \
     classes/accumulator.c \
     cy_runtime/runtime.c \
     classes/dummy2.c \
-    classes/application.c
+    classes/application.c \
+    taskqueue/taskqueue.c
 
 HEADERS += \
     cy_muids.h \
@@ -19,5 +20,6 @@ HEADERS += \
     classes/accumulator.h \
     cy_runtime/runtime.h \
     classes/dummy2.h \
-    classes/application.h
+    classes/application.h \
+    taskqueue/taskqueue.h
 

@@ -4,6 +4,7 @@
 typedef enum {
     NONE,
     M_i_construct,
+    M_i_construct_i_ppb,
     M_i_dummy,
     M_i_construct_pb,
     M_i_concat_pb,
@@ -12,7 +13,7 @@ typedef enum {
     M_i_add_i,
     M_i_getValue,
     M_i_charAt_i,
-    M_i_run_i_ppb
+    M_i_run
 } cy_muid;
 
 #endif

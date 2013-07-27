@@ -1,0 +1,3 @@
+[submodule "taskqueue"]
+	path = taskqueue
+	url = https://github.com/cybrown/SimpleTaskQueue.git

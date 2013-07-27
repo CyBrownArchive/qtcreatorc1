@@ -12,12 +12,14 @@
 #include "classes/dummy.h"
 #include "classes/dummy2.h"
 
+#include "taskqueue/taskqueue.h"
+
 void createClasses()
 {
     CY_CLASS_CREATE(Application);
     CY_CLASS_EXTENDS(Application, Object);
-    CY_CLASS_DEFINE_METHOD(Application, construct);
-    CY_CLASS_DEFINE_METHOD(Application, run_i_ppb);
+    CY_CLASS_DEFINE_METHOD(Application, construct_i_ppb);
+    CY_CLASS_DEFINE_METHOD(Application, run);
 
     CY_CLASS_CREATE(Dummy);
     CY_CLASS_EXTENDS(Dummy, Object);
@@ -50,17 +52,22 @@ void createClasses()
 int cy_main(int argc, char* argv[])
 {
     Cy_struct_Application* app = CY_NEW(Application);
-    CY_INVOKE(Cy_struct_Application*, Cy_class_Application, M_i_construct, app);
-    CY_INVOKE(int, Cy_class_Application, M_i_run_i_ppb, app, argc, argv);
+    CY_INVOKE(Cy_struct_Application*, Cy_class_Application, M_i_construct_i_ppb, app, argc, argv);
+    CY_INVOKE(int, Cy_class_Application, M_i_run, app, argc, argv);
     return 0;
 }
 
+TaskQueue queue;
+
 int main(int argc, char* argv[])
 {
+    task_queue_init(&queue, 1, 1);
     cyrt_initialize();
     createClasses();
+
     if (!setjmp(env)) {
         cy_main(argc, argv);
+        task_queue_run(&queue);
     } else {
         printf("UNCAUGHT EXCEPTION !\n");
     }
